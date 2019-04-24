@@ -6,6 +6,9 @@ const { Schema } = mongoose;
 
 const UsersSchema = new Schema({
   email: String,
+  answers:[{
+     type:Schema.Types.ObjectId, ref:'Answers'
+  }],
   hash: String,
   salt: String,
 });
@@ -37,6 +40,11 @@ UsersSchema.methods.toAuthJSON = function() {
     _id: this._id,
     email: this.email,
     token: this.generateJWT(),
+  };
+};
+UsersSchema.methods.toJSON = function() {
+  return {
+    email: this.email,
   };
 };
 
